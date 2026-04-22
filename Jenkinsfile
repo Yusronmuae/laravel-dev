@@ -2,6 +2,7 @@ node {
     checkout scm
 
     def PROD_HOST = '172.22.173.95'
+    def USER = 'yusron'
 
     // Build
     stage("Build") {
@@ -25,7 +26,7 @@ node {
                 sh 'mkdir -p ~/.ssh'
                 sh "ssh-keyscan -H ${PROD_HOST} > ~/.ssh/known_hosts"
                 sh """
-                rsync -rav --delete ./ ubuntu@${PROD_HOST}:/home/ubuntu/prod.kelasdevops.xyz/ \
+                rsync -rav --delete ./ ${USER}@${PROD_HOST}:/home/${USER}/prod.kelasdevops.xyz/ \
                 --exclude=.env \
                 --exclude=storage \
                 --exclude=.git
