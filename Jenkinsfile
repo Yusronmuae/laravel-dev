@@ -18,6 +18,12 @@ node {
 
     // Deploy
     docker.image('agung3wi/alpine-rsync:1.1').inside('-u root') {
+
+        environment {
+            PROD_HOST = '172.22.173.95'
+        }
+
+
         sshagent (credentials: ['ssh-prod']) {
             sh 'mkdir -p ~/.ssh'
             sh 'ssh-keyscan -H "$PROD_HOST" > ~/.ssh/known_hosts'
