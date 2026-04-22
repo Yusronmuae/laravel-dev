@@ -1,21 +1,18 @@
-pipeline {
-    agent any
+node {
+    checkout scm
 
-    stages {
-        stage('Install Dependencies') {
-            steps {
-                script {
-                    docker.image('composer:2').inside {
-                        sh 'composer install'
-                    }
-                }
-            }
+    // deploy env dev
+    stage("Build") {
+        docker.image('shippingdocker/php-composer:7.4').inside('-u root') {
+            sh 'rm composer.lock'
+            sh 'composer install'
         }
+    }
 
-        stage('Build') {
-            steps {
-                sh 'php artisan key:generate'
-            }
+    // Testing
+    stage("Testing") {
+        docker.image('ubuntu').inside('-u root') {
+            sh 'echo "Ini adalah test"'
         }
     }
 }
