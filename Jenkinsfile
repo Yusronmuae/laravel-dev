@@ -3,8 +3,8 @@ node {
 
     // deploy env dev
     stage("Build") {
-        docker.image('shippingdocker/php-composer:latest').inside('-u root') {
-            sh 'rm composer.lock'
+        docker.image('composer:latest').inside('-u root') {
+            sh 'php -v'
             sh 'composer install'
         }
     }
