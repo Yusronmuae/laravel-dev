@@ -29,7 +29,9 @@ node {
                 rsync -rav --delete ./ ${USER}@${PROD_HOST}:/home/${USER}/prod.kelasdevops.xyz/ \
                 --exclude=.env \
                 --exclude=storage \
-                --exclude=.git
+                --exclude=.git \
+                --exclude=vendor \
+                --no-perms --no-owner --no-group
                 """
             }
         }
